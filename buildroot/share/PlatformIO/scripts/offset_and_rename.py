@@ -1,7 +1,7 @@
 #
 # offset_and_rename.py
 #
-# - If 'build.offset' is provided, either by JSON or by the environment...
+# - If 'board_build.offset' is provided, either by JSON or by the environment...
 #   - Set linker flag LD_FLASH_OFFSET and relocate the VTAB based on 'build.offset'.
 #   - Set linker flag LD_MAX_DATA_SIZE based on 'build.maximum_ram_size'.
 #   - Define STM32_FLASH_SIZE from 'upload.maximum_size' for use by Flash-based EEPROM emulation.
@@ -24,7 +24,7 @@ if pioutil.is_pio_build():
         marlin.relocate_vtab(LD_FLASH_OFFSET)
 
         # Flash size
-        maximum_flash_size = int(board.get("upload.maximum_size") / 1024)
+        maximum_flash_size = board.get("upload.maximum_size") // 1024
         marlin.replace_define('STM32_FLASH_SIZE', maximum_flash_size)
 
         # Get upload.maximum_ram_size (defined by /buildroot/share/PlatformIO/boards/VARIOUS.json)
